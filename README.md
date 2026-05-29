@@ -31,7 +31,7 @@ Browser ──▶ Vite Dev Server (port 3000)
                └── serves static assets (React SPA)
 ```
 
-The frontend is a single-page React app. In development, Vite proxies `/api` requests to the Flask backend. In production, nginx (or your web server) handles this proxy.
+The frontend is a single-page React app. In development, Vite proxies `/api` requests to the Flask backend. In production, your web server handles the reverse proxy to the backend.
 
 ### Frontend Components
 
@@ -78,7 +78,6 @@ The frontend is a single-page React app. In development, Vite proxies `/api` req
 | Database | SQLite                         |
 | Auth     | JWT (PyJWT) + bcrypt           |
 | Infra    | Docker, Docker Compose, nginx  |
-| CI       | GitHub Actions (pytest + vitest) |
 
 ## Quick Start
 
@@ -192,6 +191,5 @@ brokerbyte/
 ├── Dockerfile.backend
 ├── Dockerfile.frontend
 ├── nginx.conf
-├── pyproject.toml
-└── .github/workflows/ci.yml
+└── pyproject.toml
 ```
