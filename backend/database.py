@@ -86,7 +86,7 @@ def init_database():
     cursor.execute('''
         INSERT OR IGNORE INTO users (username, email, password_hash, full_name, role)
         VALUES (?, ?, ?, ?, ?)
-    ''', ('admin', 'admin@brokermint.com', hashed_password, 'System Administrator', 'admin'))
+    ''', ('admin', 'admin@brokerbyte.com', hashed_password, 'System Administrator', 'admin'))
     
     conn.commit()
     conn.close()

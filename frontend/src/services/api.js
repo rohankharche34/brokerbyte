@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -9,7 +9,6 @@ const api = axios.create({
   },
 });
 
-// Add token to requests
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -18,7 +17,6 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Handle auth errors
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -28,7 +26,7 @@ api.interceptors.response.use(
       window.location.href = '/login';
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export const authAPI = {
@@ -40,7 +38,8 @@ export const complianceAPI = {
   getDashboard: () => api.get('/dashboard'),
   detectAnomalies: (tickers) => api.post('/anomalies/detect', { tickers }),
   verifyIdentity: (data) => api.post('/ekyc/verify', data),
-  getAuditTrail: (limit) => api.get(`/audit/trail?limit=${limit}`),
+  getAuditTrail: (limit, offset) =>
+    api.get(`/audit/trail?limit=${limit}&offset=${offset}`),
   generateReport: () => api.get('/reports/compliance'),
 };
 

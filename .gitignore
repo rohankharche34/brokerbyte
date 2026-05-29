@@ -1,3 +1,9 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
 # Node.js
 node_modules/
 npm-debug.log*
@@ -40,6 +46,13 @@ pids
 # Coverage directory used by tools like istanbul
 coverage/
 .nyc_output
+
+# Vite
+frontend/dist/
+
+# Database
+shared_data/
+*.db
 
 # Dependency directories
 jspm_packages/

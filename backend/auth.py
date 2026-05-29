@@ -1,7 +1,7 @@
 # backend/auth.py - FIXED
 import bcrypt
 import jwt
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import sqlite3
 import sys
 import os
@@ -19,7 +19,21 @@ class AuthSystem:
     def verify_password(self, password, hashed_password):
         return bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))
     
+    def validate_password_strength(self, password):
+        if len(password) < 8:
+            return False, 'Password must be at least 8 characters long'
+        if not any(c.isupper() for c in password):
+            return False, 'Password must contain at least one uppercase letter'
+        if not any(c.islower() for c in password):
+            return False, 'Password must contain at least one lowercase letter'
+        if not any(c.isdigit() for c in password):
+            return False, 'Password must contain at least one digit'
+        return True, ''
+
     def create_user(self, username, email, password, full_name, role='user'):
+        valid, msg = self.validate_password_strength(password)
+        if not valid:
+            raise ValueError(msg)
         conn = get_db_connection()
         try:
             password_hash = self.hash_password(password)
@@ -54,7 +68,7 @@ class AuthSystem:
             'user_id': user_data['id'],
             'username': user_data['username'],
             'role': user_data['role'],
-            'exp': datetime.utcnow() + config.JWT_ACCESS_TOKEN_EXPIRES
+            'exp': datetime.now(timezone.utc) + config.JWT_ACCESS_TOKEN_EXPIRES
         }
         return jwt.encode(payload, config.JWT_SECRET_KEY, algorithm='HS256')
     
