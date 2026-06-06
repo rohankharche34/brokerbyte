@@ -21,6 +21,7 @@ class AnomalyDetector:
     
     def generate_sample_data(self):
         """Generate sample stock data for demonstration"""
+        np.random.seed(42)
         dates = pd.date_range(end=datetime.now(), periods=90, freq='D')
         tickers = ['AAPL', 'GOOGL', 'MSFT', 'TSLA', 'AMZN']
         

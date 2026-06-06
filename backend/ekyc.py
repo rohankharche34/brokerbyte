@@ -4,7 +4,6 @@ import re
 import json
 from datetime import datetime
 import sys
-import os
 
 # Add current directory to path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))

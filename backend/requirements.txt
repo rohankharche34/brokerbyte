@@ -1,9 +1,10 @@
 flask
 flask-cors
+flask-limiter
 pandas
 numpy
 scikit-learn
 bcrypt
 pyjwt
 python-dotenv
-sqlite3
+alembic
